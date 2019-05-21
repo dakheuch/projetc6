@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+	{% block content %}		
+        	 <div class="panel panel-danger">
+        	 	<div class=" border-bottom mb-4"></div>
+                    <div class="panel-heading "><h3>Liste des Classes</h3></div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+	                                <th>Classe</th>
+	                                <th>Action</th>
+	                                <th>Action</th> 
+                            	</tr>
+                            </thead>
+                            <tbody>
+                            {% for classe in classes.items %}                            
+                                <tr>
+                                    <td>{{ classe.nomcl }}</td>                          
+                                    <td><a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_classe', cl_id=classe.id) }}">Editer</a></td>
+                                    <td><a class="btn btn-danger btn-sm mt-1 mb-1" onclick="return confirm('Etes-vous sure de vouloir Supprimer?')" href="{{ url_for('delete_classe', cl_id=classe.id) }}">Supprimer</a></td>
+                                </tr>
+                            {% endfor %}                                
+                            </tbody>
+                        </table>                    
+                    </div>
+                </div>
+                {% for page_num in classes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+			      {% if page_num %}
+			        {% if classes.page == page_num %}
+			          <a class="btn btn-info mb-4" 
+				          href="{{ url_for('allclasses', page=page_num) }}">{{ page_num }}
+				      </a>
+			        {% else %}
+			          <a class="btn btn-outline-info mb-4" 
+				          href="{{ url_for('allclasses', page=page_num)}}">{{ page_num }}
+				      </a>
+			        {% endif %}
+			      {% else %}
+			        ...
+			      {% endif %}
+				{% endfor %}
+	{% endblock content %}
