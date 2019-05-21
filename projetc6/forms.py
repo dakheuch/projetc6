@@ -1,9 +1,8 @@
 from flask_wtf import FlaskForm
-from flask_login import current_user
 from flask_wtf.file import FileField, FileAllowed
 from wtforms.fields.html5 import DateField
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Length
 from projetc6.models import Eleve, Classe
 
 

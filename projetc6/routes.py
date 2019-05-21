@@ -1,16 +1,14 @@
 import os
 import secrets
-from PIL import Image
-from flask import render_template, url_for, flash, redirect, request,abort
+from flask import render_template, url_for, flash, redirect, request
 from projetc6 import app, db
 from projetc6.forms import ClasseForm, EleveForm
 from projetc6.models import Eleve, Classe
-from flask_login import login_user, current_user, logout_user, login_required
+# from flask_login import login_user, current_user, logout_user, login_required
 
 
 
-
-#@app.route permet de définir une page (ou route) avec flask
+# beginning part classes routes
 @app.route("/")
 @app.route("/allclasses")
 def allclasses():
@@ -56,9 +54,9 @@ def delete_classe(cl_id):
 	db.session.commit()
 	flash('Classe supprimer avec Succes!', 'success')
 	return redirect(url_for('allclasses'))
-# fin partie
+# end part classes routes
 
-# debut partie eleve
+# beginning part eleves routes
 @app.route('/ajout_elv',methods=['GET', 'POST'])
 def ajout_elv():
 	form=EleveForm()
@@ -77,11 +75,12 @@ def ajout_elv():
 		return redirect(url_for('all_eleves'))
 	return render_template('nouveau_eleve.html', title='Ajouter Eleve', 
 		form=form, legend='Inscription',form1=form1, allclasses=allclasses)
-# all_eleves
 
+# all_eleves
 @app.route("/all_eleves")
 def all_eleves():
 	page=request.args.get('page',1,type=int)
 	eleves=Eleve.query.order_by(Eleve.id_classe.desc()).paginate(page=page,per_page=3)
 	# eleves=Eleve.query.all()
 	return render_template('all_eleves.html',eleves=eleves)
+# end part classes routes
